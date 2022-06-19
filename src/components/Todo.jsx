@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 
 import { connect } from 'react-redux';
 
-import { addTodos } from '../redux/reducers';
+import {
+  addTodos,
+  removeTodos,
+  updateTodos,
+  completeTodos,
+} from '../redux/reducers';
+
+import {GoPlus } from 'react-icons/go'
 
 const mapStateToProps = (state) => {
   return {
@@ -13,17 +20,21 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addTodo: (obj) => dispatch(addTodos(obj)),
+    removeTodo: (id) => dispatch(removeTodos(id)),
+    updateTodo: (obj) => dispatch(updateTodos(obj)),
+    completeTodo: (id) => dispatch(completeTodos(id)),
   };
 };
 
 const Todo = (props) => {
   const [todo, setTodo] = useState('');
 
+
   const handleChange = (e) => {
     setTodo(e.target.value);
   };
 
-  console.log('props from store', props);
+    //   console.log('props from store', props);
 
   return (
     <div className="addTodos">
@@ -42,15 +53,11 @@ const Todo = (props) => {
           })
         }
       >
-        Add
+        <GoPlus/>
       </button>
 
       <br />
-      <ul>
-        {props.todos.map((item) => {
-          return <li key={item.id}>{item.item}</li>;
-        })}
-      </ul>
+     
     </div>
   );
 };
